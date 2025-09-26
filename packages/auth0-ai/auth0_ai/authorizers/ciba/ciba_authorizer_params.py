@@ -1,6 +1,7 @@
-from typing import Awaitable, Callable, Generic, Literal, Optional, TypedDict, Union
+from typing import Awaitable, Callable, Generic, Literal, Optional, TypedDict, Union, List
 from auth0_ai.authorizers.context import AuthContext
 from auth0_ai.authorizers.types import ToolInput
+from auth0_ai.credentials import AuthorizationDetails
 from auth0_ai.stores import Store
 
 
@@ -37,9 +38,9 @@ class CIBAAuthorizerParams(TypedDict, Generic[ToolInput]):
         Callable[ToolInput, Awaitable[str]]
     ]
     authorization_details: Optional[Union[
-        list[dict],
-        Callable[ToolInput, list[dict]],
-        Callable[ToolInput, Awaitable[list[dict]]]
+        List[AuthorizationDetails],
+        Callable[[ToolInput], List[AuthorizationDetails]],
+        Callable[[ToolInput], Awaitable[List[AuthorizationDetails]]],
     ]]
     store: Optional[Store]
     audience: Optional[str]
